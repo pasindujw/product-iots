@@ -1428,7 +1428,6 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-<<<<<<< HEAD
         <!-- Adding IoT Analytics Dashboard and gadget CApps -->
         <file>
             <source>
@@ -1438,8 +1437,6 @@
             </outputDirectory>
             <fileMode>644</fileMode>
         </file>
-=======
->>>>>>> 9689ecc99fc307c502ea835d5a9d8d5841960e17
         <!-- Copying webapp-publisher-config.xml -->
         <file>
             <source>src/core/conf/etc/webapp-publisher-config.xml</source>
