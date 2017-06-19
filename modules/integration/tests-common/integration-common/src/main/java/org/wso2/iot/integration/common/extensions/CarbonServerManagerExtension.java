@@ -102,19 +102,24 @@ public class CarbonServerManagerExtension {
 
                     }
                 });
-                ClientConnectionUtil.waitForPort(defaultHttpPort + this.portOffset, 300000L, false, (String)this.automationContext.getInstance().getHosts().get("default"));
+                ClientConnectionUtil.waitForPort(defaultHttpPort + this.portOffset, DEFAULT_START_STOP_WAIT_MS, false, (String)this
+                        .automationContext.getInstance().getHosts().get("default"));
                 long time = System.currentTimeMillis() + 60000L;
 
-                while(true) {
-                    if(this.inputStreamHandler.getOutput().contains("Mgt Console URL") || System.currentTimeMillis() >= time) {
-                        int httpsPort = defaultHttpsPort + this.portOffset;
-                        String backendURL = this.automationContext.getContextUrls().getSecureServiceUrl().replaceAll("(:\\d+)", ":" + httpsPort);
-                        User superUser = this.automationContext.getSuperTenant().getTenantAdmin();
-                        ClientConnectionUtil.waitForLogin(backendURL, superUser);
-                        log.info("Server started successfully.");
-                        break;
-                    }
-                }
+//                while(true) {
+//                    if(this.inputStreamHandler.getOutput().contains("Mgt Console URL") || System.currentTimeMillis() >= time) {
+//                        int httpsPort = defaultHttpsPort + this.portOffset;
+//                        String backendURL = this.automationContext.getContextUrls().getSecureServiceUrl().replaceAll("(:\\d+)", ":" + httpsPort);
+//                        User superUser = this.automationContext.getSuperTenant().getTenantAdmin();
+//                        ClientConnectionUtil.waitForLogin(backendURL, superUser);
+//                        log.info("Server started successfully.");
+//                        break;
+//                    }
+//                }
+                int httpsPort = defaultHttpsPort + this.portOffset;
+                String backendURL = this.automationContext.getContextUrls().getSecureServiceUrl().replaceAll("(:\\d+)", ":" + httpsPort);
+                User superUser = this.automationContext.getSuperTenant().getTenantAdmin();
+                ClientConnectionUtil.waitForLogin(backendURL, superUser);
             } catch (XPathExpressionException | IOException var13) {
                 throw new IllegalStateException("Unable to start server", var13);
             }
@@ -211,9 +216,9 @@ public class CarbonServerManagerExtension {
 
                 long time = System.currentTimeMillis() + 300000L;
 
-                while(!this.inputStreamHandler.getOutput().contains("Halting JVM") && System.currentTimeMillis() < time) {
-                    ;
-                }
+//                while(!this.inputStreamHandler.getOutput().contains("Halting JVM") && System.currentTimeMillis() < time) {
+//                    ;
+//                }
 
                 log.info("Server stopped successfully...");
             }
@@ -260,9 +265,9 @@ public class CarbonServerManagerExtension {
 
         long time = System.currentTimeMillis() + 300000L;
 
-        while(!this.inputStreamHandler.getOutput().contains("Halting JVM") && System.currentTimeMillis() < time) {
-            ;
-        }
+//        while(!this.inputStreamHandler.getOutput().contains("Halting JVM") && System.currentTimeMillis() < time) {
+//            ;
+//        }
 
         time = System.currentTimeMillis();
 
