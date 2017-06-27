@@ -18,8 +18,7 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.iot</groupId>
         <artifactId>wso2iot-p2-profile</artifactId>
@@ -443,7 +442,7 @@
 
                                 <!-- IoT Server Features -->
                                 <featureArtifactDef>
-                                    org.wso2.iot:org.wso2.iot.core.styles.feature:${product.iot.version}
+                                    org.wso2.iot:org.wso2.iot.core.styles.feature:${project.version}
                                 </featureArtifactDef>
 
                                 <!-- Mobile Device Management Features -->
@@ -868,7 +867,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.iot.core.styles.feature.group</id>
-                                    <version>${product.iot.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <!-- End of IoTServer Features -->
                                 <!-- Mobile Features -->
@@ -1663,7 +1662,7 @@
                                 <!-- IoTServer Features -->
                                 <feature>
                                     <id>org.wso2.iot.core.styles.feature.group</id>
-                                    <version>${product.iot.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <!-- End of IoTServer Features -->
                                 <feature>
@@ -1889,7 +1888,7 @@
                                 <!-- IoTServer Features -->
                                 <feature>
                                     <id>org.wso2.iot.core.styles.feature.group</id>
-                                    <version>${product.iot.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <!-- End of IoTServer Features -->
                                 <!-- App management features-->
@@ -2558,7 +2557,7 @@
                                 <!-- IoTServer Features -->
                                 <feature>
                                     <id>org.wso2.iot.core.styles.feature.group</id>
-                                    <version>${product.iot.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <!-- End of IoTServer Features -->
 
@@ -3192,12 +3191,11 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf"/>
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf" />
                                 <copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf">
-                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf"/>
+                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf" />
                                 </copy>
-                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf"
-                                        includeemptydirs="true"/>
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf" includeemptydirs="true" />
                             </tasks>
                         </configuration>
                     </execution>
@@ -3206,7 +3204,7 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <tasks>
-                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server"/>
+                                <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server" />
                             </tasks>
                         </configuration>
                         <goals>
@@ -3217,9 +3215,8 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="false" value="true"
-                                         dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
-                                    <include name="**/bundles.info"/>
+                                <replace token="false" value="true" dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/components">
+                                    <include name="**/bundles.info" />
                                 </replace>
                             </tasks>
                         </configuration>

@@ -878,7 +878,7 @@
             <dependency>
                 <groupId>org.wso2.iot</groupId>
                 <artifactId>org.wso2.carbon.iot.integration.common</artifactId>
-                <version>${product.iot.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -1006,7 +1006,13 @@
             <dependency>
                 <groupId>org.wso2.iot</groupId>
                 <artifactId>org.wso2.iot.core.admin.styles</artifactId>
-                <version>${product.iot.version}</version>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wso2.iot</groupId>
+                <artifactId>org.wso2.carbon.iot.core.integration.ui.pages</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <!--mobile-qsg dependencies-->
             <dependency>
@@ -1511,14 +1517,14 @@
         <carbon.governance.version>4.7.0</carbon.governance.version>
 
         <!-- Carbon Device Management -->
-        <carbon.device.mgt.version>3.0.9-SNAPSHOT</carbon.device.mgt.version>
+        <carbon.device.mgt.version>3.0.10</carbon.device.mgt.version>
         <carbon.device.mgt.version.range>[3.0.0, 4.0.0)</carbon.device.mgt.version.range>
 
         <!-- IOT Device Management -->
-        <product.iot.version>3.1.0-SNAPSHOT</product.iot.version>
+        <product.iot.version>${project.version}</product.iot.version>
 
         <!-- Carbon Device Management Plugins-->
-        <carbon.device.mgt.plugin.version>4.0.7-SNAPSHOT</carbon.device.mgt.plugin.version>
+	    <carbon.device.mgt.plugin.version>4.0.8</carbon.device.mgt.plugin.version>
 
         <!-- API Management -->
         <carbon.api.mgt.version>6.1.94</carbon.api.mgt.version>
@@ -1531,7 +1537,7 @@
         <carbon.analytics.common.version>5.1.17</carbon.analytics.common.version>
         <carbon.analytics.version>1.3.3</carbon.analytics.version>
         <carbon.analytics.das.version>1.3.5</carbon.analytics.das.version>
-        <product.iot.analytics.version>${product.iot.version}</product.iot.analytics.version>
+        <product.iot.analytics.version>${project.version}</product.iot.analytics.version>
         <product.das.version>3.1.0</product.das.version>
         <product.mb.version>3.1.0</product.mb.version>
 
@@ -1548,7 +1554,7 @@
         <orbit.version.rampart>1.6.1.wso2v10</orbit.version.rampart>
 
         <!-- IoT Broker Dependencies -->
-        <product.iot.broker.version>${product.iot.version}</product.iot.broker.version>
+        <product.iot.broker.version>${project.version}</product.iot.broker.version>
         <andes.version>3.2.19</andes.version>
         <carbon.messaging.version>3.2.15</carbon.messaging.version>
 
@@ -1623,7 +1629,7 @@
         <caramel.version>1.0.1</caramel.version>
 
         <!-- App manager version-->
-        <appmgt.feature.version>1.2.29</appmgt.feature.version>
+        <appmgt.feature.version>1.2.30</appmgt.feature.version>
 
         <!-- Carbon Store version-->
         <carbon.store.version>1.5.1</carbon.store.version>
@@ -1657,6 +1663,8 @@
 
         <apache.httpmime.version>4.2.5</apache.httpmime.version>
         <apache.httpclient.version>4.5.2</apache.httpclient.version>
+
+        <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 
     <scm>
@@ -1694,8 +1702,8 @@
                 <version>2.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>

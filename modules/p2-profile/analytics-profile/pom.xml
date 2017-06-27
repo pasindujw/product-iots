@@ -854,9 +854,9 @@
                             <tasks>
                                 <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf" />
                                 <copy todir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf">
-                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf"/>
+                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf" />
                                 </copy>
-                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf" includeemptydirs="true"/>
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}/repository/conf" includeemptydirs="true" />
                                 <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/etc/bundle-config/hadoop-client" />
                                 <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/conf/analytics/spark" />
                                 <mkdir dir="target/wso2carbon-core-${carbon.kernel.version}/wso2/deployment/server" />
