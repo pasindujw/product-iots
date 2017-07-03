@@ -653,6 +653,7 @@
                 <exclude>**/artifacts.xml</exclude>
                 <exclude>**/json_2.0.0.wso2v1.jar</exclude>
                 <exclude>**/nimbus-jose-jwt_2.26.1.wso2v2.jar</exclude>
+                <exclude>**/httpclient_4.3.2.wso2v1.jar</exclude>
             </excludes>
         </fileSet>
 
@@ -949,7 +950,7 @@
         <!-- GPL Siddhi Extension Script for Geo Fencing -->
         <fileSet>
             <directory>../p2-profile/analytics-profile/target/wso2carbon-core-${carbon.kernel.version}/scripts</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/scripts</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/wso2/analytics/scripts</outputDirectory>
         </fileSet>
 
         <!-- ********************************* End of Analytics Profile ********************************* -->
