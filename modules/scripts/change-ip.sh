@@ -427,6 +427,46 @@ keytool -importkeystore -srckeystore ./tmp/AKEYSTORE.p12 -srcstoretype PKCS12 -d
 
 
 #########################
+# If importing certificate exist in the client trust stores delete the existing certificate
+echo ""
+echo "Deleting existing certificates in client trust stores"
+
+if keytool -list -storepass wso2carbon -alias wso2broker -keystore ../repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting wso2broker public cert in core client truststore"
+    keytool -delete -alias wso2broker -keystore ../repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+if keytool -list -storepass wso2carbon -alias wso2analytics -keystore ../repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting wso2analytics public cert in core client truststore"
+    keytool -delete -alias wso2analytics -keystore ../repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+if keytool -list -storepass wso2carbon -alias wso2iotcore -keystore ../wso2/broker/repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting wso2iotcore public cert in broker client truststore"
+    keytool -delete -alias wso2iotcore -keystore ../wso2/broker/repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+if keytool -list -storepass wso2carbon -alias wso2analytics -keystore ../wso2/broker/repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting wso2analytics public cert in broker client truststore"
+    keytool -delete -alias wso2analytics -keystore ../wso2/broker/repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+if keytool -list -storepass wso2carbon -alias wso2iotcore -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting wso2iotcore public cert in analytics client truststore"
+    keytool -delete -alias wso2iotcore -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+if keytool -list -storepass wso2carbon -alias wso2broker -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting wso2broker public cert in analytics client truststore"
+    keytool -delete -alias wso2broker -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+if keytool -list -storepass wso2carbon -alias wso2carbonjwt -keystore ../repository/resources/security/client-truststore.jks >/dev/null; then
+    echo "Deleting JWT public cert in client truststore"
+    keytool -delete -alias wso2carbonjwt -keystore ../repository/resources/security/client-truststore.jks -storepass wso2carbon
+fi
+
+#########################
 # copying certificates to client trust stores
 echo ""
 echo "Copying certificates to client trust stores"
@@ -441,27 +481,47 @@ keytool -import -alias wso2analytics -file ./tmp/a.crt -keystore ../wso2/broker/
 
 # copying core and broker certificates to IoT analytics client trust store
 keytool -import -alias wso2iotcore -file ./tmp/c.crt -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks -storepass wso2carbon -noprompt
-keytool -import -alias wso2analytics -file ./tmp/b.crt -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks -storepass wso2carbon -noprompt
+keytool -import -alias wso2broker -file ./tmp/b.crt -keystore ../wso2/analytics/repository/resources/security/client-truststore.jks -storepass wso2carbon -noprompt
 
 echo ""
-echo "Generating jwt keystore"
-keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore ../repository/resources/security/wso2carbonjwt.jks -dname "CN=10.10.10.202,OU=Home,O=Home,L=SL,S=WS,C=LK" -storepass wso2carbon -keypass wso2carbon
+echo "Generating JWT keystore"
+echo "-------------------------"
+
+echo ""
+echo "Please enter your gateway IP"
+echo "(If you are going to run IoT server on a single machine, use IoT core IP)"
+read val10;
+
+while [[ -z $val10 ]]; do #if $val2 is a zero length String
+    echo "Please enter your current IP"
+    read val10;
+done
+
+JWT_SUBJ="CN=$val10,OU=IOT,O=WSO2,L=Colombo,S=Western,C=LK"
+
+echo ""
+echo 'Provided Subject for JWT : ' $JWT_SUBJ
+
+keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore ../repository/resources/security/wso2carbonjwt.jks -dname $JWT_SUBJ -storepass wso2carbon -keypass wso2carbon
 cp -R ../repository/resources/security/wso2carbonjwt.jks ../wso2/analytics/repository/resources/security/
 
+echo ""
 echo "Changing  <IoT_HOME>/conf/etc/jwt.properties"
-sed -i -e 's/#KeyStore=.*/KeyStore=repository\/resources\/security\/wso2carbonjwt.jks /' ../conf/etc/jwt.properties
-sed -i -e 's/#KeyStorePassword=.*/KeyStorePassword=wso2carbon /' ../conf/etc/jwt.properties
-sed -i -e 's/#PrivateKeyAlias=.*/PrivateKeyAlias=wso2carbon /' ../conf/etc/jwt.properties
-sed -i -e 's/#PrivateKeyPassword=.*/PrivateKeyPassword=wso2carbon /' ../conf/etc/jwt.properties
-sed -i -e 's/#default-jwt-client=.*/default-jwt-client=false /' ../conf/etc/jwt.properties
+sed -i -e 's/#KeyStore=.*/KeyStore=repository\/resources\/security\/wso2carbonjwt.jks/' ../conf/etc/jwt.properties
+sed -i -e 's/#KeyStorePassword=.*/KeyStorePassword=wso2carbon/' ../conf/etc/jwt.properties
+sed -i -e 's/#PrivateKeyAlias=.*/PrivateKeyAlias=wso2carbon/' ../conf/etc/jwt.properties
+sed -i -e 's/#PrivateKeyPassword=.*/PrivateKeyPassword=wso2carbon/' ../conf/etc/jwt.properties
+sed -i -e 's/default-jwt-client=.*/default-jwt-client=false/' ../conf/etc/jwt.properties
 
+echo ""
 echo "Changing  <IoT_HOME>/wso2/analytics/conf/etc/jwt.properties"
-sed -i -e 's/#KeyStore=.*/KeyStore=repository\/resources\/security\/wso2carbonjwt.jks /' ../wso2/analytics/conf/etc/jwt.properties
-sed -i -e 's/#KeyStorePassword=.*/KeyStorePassword=wso2carbon /' ../wso2/analytics/conf/etc/jwt.properties
-sed -i -e 's/#PrivateKeyAlias=.*/PrivateKeyAlias=wso2carbon /' ../wso2/analytics/conf/etc/jwt.properties
-sed -i -e 's/#PrivateKeyPassword=.*/PrivateKeyPassword=wso2carbon /' ../wso2/analytics/conf/etc/jwt.properties
-sed -i -e 's/#default-jwt-client=.*/default-jwt-client=false /' ../wso2/analytics/conf/etc/jwt.properties
+sed -i -e 's/#KeyStore=.*/KeyStore=repository\/resources\/security\/wso2carbonjwt.jks/' ../wso2/analytics/conf/etc/jwt.properties
+sed -i -e 's/#KeyStorePassword=.*/KeyStorePassword=wso2carbon/' ../wso2/analytics/conf/etc/jwt.properties
+sed -i -e 's/#PrivateKeyAlias=.*/PrivateKeyAlias=wso2carbon/' ../wso2/analytics/conf/etc/jwt.properties
+sed -i -e 's/#PrivateKeyPassword=.*/PrivateKeyPassword=wso2carbon/' ../wso2/analytics/conf/etc/jwt.properties
+sed -i -e 's/default-jwt-client=.*/default-jwt-client=false/' ../wso2/analytics/conf/etc/jwt.properties
 
+ehco ""
 echo "Setting up the public certificate for the default idp"
 if hash tac; then
     VAR=$(keytool -exportcert -alias wso2carbon -keystore ../repository/resources/security/wso2carbonjwt.jks -rfc -storepass wso2carbon | tail -n +2 | tac | tail -n +2 | tac | tr -cd "[:print:]");
@@ -472,5 +532,20 @@ echo ""
 echo "Printing certificate"
 echo "-----------------------"
 echo $VAR
-sed -i -e 's#<Certificate>.*#<Certificate>'"$VAR"'</Certificate>#g' ../conf/identity/identity-providers/iot_default.xml
-echo "Completed!!!"
+sed -i '' -e 's#<Certificate>.*#<Certificate>'"$VAR"'</Certificate>#g' ../conf/identity/identity-providers/iot_default.xml
+
+echo ""
+if [ -e "../conf/identity/identity-providers/iot_default.xml-e" ]; then
+        echo "IDP temp file exists, hence removing"
+        rm -f ../conf/identity/identity-providers/iot_default.xml-e
+fi
+
+echo ""
+echo "Storing JWT public cert in client truststore"
+keytool -exportcert -alias wso2carbon -keystore ../repository/resources/security/wso2carbonjwt.jks -rfc -storepass wso2carbon -file ./tmp/jwtcert
+keytool -importcert -alias wso2carbonjwt -keystore ../repository/resources/security/client-truststore.jks -storepass wso2carbon -file ./tmp/jwtcert -noprompt
+
+sed -i -e 's/<Parameter Name="wso2.org\/products\/iot">.*/<Parameter Name="wso2.org\/products\/iot">wso2carbonjwt<\/Parameter>/' ../conf/etc/webapp-authenticator-config.xml
+
+echo ""
+echo "Configuration Completed!!!"
