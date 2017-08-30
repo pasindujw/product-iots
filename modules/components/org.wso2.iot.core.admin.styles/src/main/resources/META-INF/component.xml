@@ -15,6 +15,14 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
+<component xmlns="http://products.wso2.org/carbon">
 
-<handlers>
-</handlers>
+    <contexts>
+        <context>
+            <context-id>default-context</context-id>
+            <context-name>devicemgt</context-name>
+            <protocol>https</protocol>
+            <description>IoT Server Default Context</description>
+        </context>
+    </contexts>
+</component>
